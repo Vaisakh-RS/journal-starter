@@ -90,6 +90,18 @@ async def get_entry(entry_id: str, entry_service: EntryServiceDependency) -> Ent
     #
     # Hint: Check the update_entry endpoint for similar patterns.
     # See docs/04-get-entry.md for the exercise walkthrough.
+    entry_res = await entry_service.get_entry(entry_id)
+    if entry_res is None:
+        raise HTTPException(status_code=404)
+    return Entry(
+        id=entry_res.id,
+        work=entry_res.work,
+        struggle=entry_res.struggle,
+        intention=entry_res.intention,
+        created_at=entry_res.created_at,
+        updated_at=entry_res.updated_at,
+    )
+
     raise HTTPException(status_code=501, detail="Not implemented - complete this endpoint!")
 
 
